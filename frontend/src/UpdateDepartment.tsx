@@ -1,38 +1,25 @@
-import { Button, Form, FormProps, Input, Select } from "antd";
-import { getEmployee, updateEmployee } from "./services/EmployeeService";
+import { Button, Form, FormProps, Input } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { EmployeeType } from "./Employeeslist";
-import { listDepartments } from "./services/DepartmentService";
+import { getDepartment, updateDepartment } from "./services/DepartmentService";
+import { DepartmentType } from "./DepartmentsList";
 
-const UpdateEmployee = () => {
+const UpdateDepartment = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
-  const [departments, setDepartments] = useState([]);
-
-  useEffect(() => {
-    listDepartments()
-      .then((response) => {
-        setDepartments(response.data); // Assume response.data is an array of departments
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   useEffect(() => {
     if (!id) {
       // If no `id` is provided, navigate back or show an error
       console.error("No ID provided for the department update.");
-      navigate("/employees"); // Navigate to a safe route
+      navigate("/departments"); // Navigate to a safe route
       return;
     }
 
     setLoading(true);
-    getEmployee(+id)
+    getDepartment(+id)
       .then((response) => {
         form.setFieldsValue(response.data);
       })
@@ -42,22 +29,23 @@ const UpdateEmployee = () => {
       .finally(() => setLoading(false));
   }, [id, form, navigate]);
 
-  const onFinish: FormProps<EmployeeType>["onFinish"] = (values) => {
+  const onFinish: FormProps<DepartmentType>["onFinish"] = (values) => {
+
     if (!id) {
       console.error("No ID provided for the update operation.");
       return;
     }
-
+    
     console.log("Success:", values);
 
-    updateEmployee(+id, values).then((response) => {
+    updateDepartment(+id, values).then((response) => {
       console.log(response.data);
     });
 
-    navigate("/employees");
+    navigate("/departments");
   };
 
-  const onFinishFailed: FormProps<EmployeeType>["onFinishFailed"] = (
+  const onFinishFailed: FormProps<DepartmentType>["onFinishFailed"] = (
     errorInfo
   ) => {
     console.log("Failed:", errorInfo);
@@ -81,52 +69,26 @@ const UpdateEmployee = () => {
           <p>Loading...</p>
         ) : (
           <>
-            <Form.Item<EmployeeType>
-              label="First Name"
-              name="firstName"
+            <Form.Item<DepartmentType>
+              label={"Department Name"}
+              name="departmentName"
               rules={[
                 { required: true, message: "Please input your first name" },
               ]}
-              className="w-96"
+              className="w-[500px]"
             >
               <Input />
             </Form.Item>
 
-            <Form.Item<EmployeeType>
-              label="Last Name"
-              name="lastName"
+            <Form.Item<DepartmentType>
+              label={"Department Description"}
+              name="departmentDescription"
               rules={[
                 { required: true, message: "Please input your last name" },
               ]}
-              className="w-96"
+              className="w-[500px]"
             >
               <Input />
-            </Form.Item>
-
-            <Form.Item<EmployeeType>
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: "Please input your email" }]}
-              className="w-96"
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item<EmployeeType>
-              label="Department"
-              name="departmentId" // This should match the backend field
-              rules={[
-                { required: true, message: "Please select a department" },
-              ]}
-              className="w-96"
-            >
-              <Select placeholder="Select a department">
-                {departments.map((department) => (
-                  <Select.Option key={department.id} value={department.id}>
-                    {department.departmentName}
-                  </Select.Option>
-                ))}
-              </Select>
             </Form.Item>
 
             <Form.Item label={null}>
@@ -141,4 +103,4 @@ const UpdateEmployee = () => {
   );
 };
 
-export default UpdateEmployee;
+export default UpdateDepartment;

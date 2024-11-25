@@ -1,50 +1,40 @@
 import { Button, Popconfirm, Table } from "antd";
 import Column from "antd/es/table/Column";
 import { useEffect, useState } from "react";
-import { deleteEmployee, listEmployees } from "./services/EmployeeService";
 import { IoMdAdd } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import { GrUpdate } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
-import { listDepartments } from "./services/DepartmentService";
+import {
+  deleteDepartment,
+  listDepartments,
+} from "./services/DepartmentService";
+import { useNavigate } from "react-router-dom";
 
-export type EmployeeType = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  departmentId: number;
-};
-
-interface DataType {
-  key: React.Key;
-  firstName: string;
-  lastName: string;
-  id: number;
-  email: string;
-  department: number;
+export interface DepartmentType {
+  departmentName?: string;
+  departmentDescription?: string;
 }
 
-const Employeeslist = () => {
-  const [employees, setEmployees] = useState([]);
+interface DataType {
+  id: number;
+  key: React.Key;
+  departmentName: string;
+  departmentDescription: string;
+}
+
+const Departmentslist = () => {
+  const navigate = useNavigate();
   const [departments, setDepartments] = useState([]);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    getAllEmployees();
+    getAllDepartments();
   }, []);
 
-  function getAllEmployees() {
-    listEmployees()
-      .then((response) => {
-        setEmployees(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  function addNewDepartment() {
+    navigate("/add-department");
   }
 
-  useEffect(() => {
+  function getAllDepartments() {
     listDepartments()
       .then((response) => {
         setDepartments(response.data);
@@ -52,64 +42,52 @@ const Employeeslist = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
-
-
-  function addNewEmployee() {
-    navigate("/add-employee");
   }
 
   function handleUpdate(id: number) {
-    navigate(`/update-employee/${id}`);
+    navigate(`/update-department/${id}`);
   }
 
   function handleDelete(id: number) {
     console.log(id + "deleted");
 
-    deleteEmployee(id)
+    deleteDepartment(id)
       .then((response) => {
         console.log(response.data);
-        getAllEmployees();
+        getAllDepartments();
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
- const departmentMap = departments.reduce(
-   (map, dept) => ({ ...map, [dept.id]: dept.departmentName }),
-   {}
- );
-
- const transformedEmployees = employees.map((employee) => ({
-   ...employee,
-   department: departmentMap[employee.departmentId] || "Unknown", // Replace departmentId with name
-   departmentId: undefined, // Optionally, remove the departmentId field
- }));
-
-
   return (
     <div className="h-[calc(100vh-170px)]">
       <div
         className="flex flex-row hover:text-gray-400 hover:cursor-pointer transition-all duration-300 rounded-lg bg-slate-300 w-14 items-center px-2 py-1 justify-center mb-2"
-        onClick={addNewEmployee}
+        onClick={addNewDepartment}
       >
         <IoMdAdd />
         <h1>Add</h1>
       </div>
       <Table<DataType>
-        dataSource={transformedEmployees}
+        dataSource={departments}
         pagination={{
           pageSize: 10,
         }}
       >
-        <Column title="First Name" dataIndex="firstName" key="firstName" />
-        <Column title="Last Name" dataIndex="lastName" key="lastName" />
+        <Column
+          title="Department Name"
+          dataIndex="departmentName"
+          key="departmentName"
+        />
+        <Column
+          title="Department Description"
+          dataIndex="departmentDescription"
+          key="departmentDescription"
+        />
 
         <Column title="ID" dataIndex="id" key="age" />
-        <Column title="Email" dataIndex="email" key="address" />
-        <Column title="Department" dataIndex={"department"} key="department" />
-
         <Column
           title="Actions"
           key="actions"
@@ -142,4 +120,4 @@ const Employeeslist = () => {
   );
 };
 
-export default Employeeslist;
+export default Departmentslist;

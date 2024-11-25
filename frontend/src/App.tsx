@@ -6,6 +6,9 @@ import About from "./About";
 import Employeeslist from "./Employeeslist";
 import AddEmployee from "./AddEmployee";
 import UpdateEmployee from "./UpdateEmployee";
+import Departmentslist from "./DepartmentsList";
+import AddDepartment from "./AddDepartment";
+import UpdateDepartment from "./UpdateDepartment";
 
 const App = () => {
   return (
@@ -13,10 +16,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<Homepage />} />
-          <Route path="/employees" element={<Employeeslist/>}/>
-          <Route path="/add-employee" element={<AddEmployee/>}/>
-          <Route path="/update-employee/:id" element={<UpdateEmployee/>}/>
+          <Route path="/employees" element={<Employeeslist />} />
+          <Route path="/add-employee" element={<AddEmployee />} />
+          <Route path="/update-employee/:id" element={<UpdateEmployee />} />
           <Route path="/about" element={<About />} />
+          <Route path="/departments" element={<Departmentslist />} />
+          <Route path="/add-department" element={<AddDepartment />} />
+          <Route path="/update-department/:id" element={<UpdateDepartment />} />
         </Route>
       </Routes>
     </div>

@@ -8,17 +8,24 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Button, Menu } from "antd";
+import { useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-const items: MenuItem[] = [
-  { key: "1", icon: <PieChartOutlined />, label: "option 1"},
-  { key: "2", icon: <DesktopOutlined />, label: "Employees" },
-  { key: "3", icon: <ContainerOutlined />, label: "Option 3" },
-];
-
 const Sider = () => {
+  const navigate = useNavigate();
+
+  const items: MenuItem[] = [
+    { key: "/Homepage", icon: <PieChartOutlined />, label: "Homepage" },
+    { key: "/employees", icon: <DesktopOutlined />, label: "Employees" },
+    { key: "/departments", icon: <ContainerOutlined />, label: "Departments" },
+  ];
+
   const [collapsed, setCollapsed] = useState(false);
+
+  const navigator:MenuProps["onClick"] = (e) => {
+    navigate(e.key);
+  };
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -39,6 +46,7 @@ const Sider = () => {
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}
+        onClick={navigator}
         items={items}
         className="h-[calc(100vh-108px)]"
       />

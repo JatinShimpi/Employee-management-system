@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EmployeeType } from "../AddEmployee";
+import { EmployeeType } from "../Employeeslist";
 
 const REST_API_BASE_URL = "http://localhost:8080/api/employees";
 

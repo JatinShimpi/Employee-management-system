@@ -1,15 +1,23 @@
-import { Button, Form, FormProps, Input } from "antd";
+import { Button, Form, FormProps, Input, Select } from "antd";
 import { createEmployee } from "./services/EmployeeService";
 import { useNavigate } from "react-router-dom";
-
-export type EmployeeType = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-};
+import { EmployeeType } from "./Employeeslist";
+import { useEffect, useState } from "react";
+import { listDepartments } from "./services/DepartmentService";
 
 const AddEmployee = () => {
   const navigate = useNavigate();
+  const [departments, setDepartments] = useState([]); 
+
+  useEffect(() => {
+    listDepartments()
+      .then((response) => {
+        setDepartments(response.data); // Assume response.data is an array of departments
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const onFinish: FormProps<EmployeeType>["onFinish"] = (values) => {
     console.log("Success:", values);
@@ -44,6 +52,7 @@ const AddEmployee = () => {
           label="First Name"
           name="firstName"
           rules={[{ required: true, message: "Please input your first name" }]}
+          className="w-96"
         >
           <Input />
         </Form.Item>
@@ -52,6 +61,7 @@ const AddEmployee = () => {
           label="Last Name"
           name="lastName"
           rules={[{ required: true, message: "Please input your last name" }]}
+          className="w-96"
         >
           <Input />
         </Form.Item>
@@ -60,8 +70,24 @@ const AddEmployee = () => {
           label="Email"
           name="email"
           rules={[{ required: true, message: "Please input your email" }]}
+          className="w-96"
         >
           <Input />
+        </Form.Item>
+
+        <Form.Item<EmployeeType>
+          label="Department"
+          name="departmentId" // This should match the backend field
+          rules={[{ required: true, message: "Please select a department" }]}
+          className="w-96"
+        >
+          <Select placeholder="Select a department">
+            {departments.map((department) => (
+              <Select.Option key={department.id} value={department.id}>
+                {department.departmentName}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item label={null}>
