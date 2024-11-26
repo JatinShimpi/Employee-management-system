@@ -1,7 +1,8 @@
 import axios from "axios";
 import { DepartmentType } from "../DepartmentsList";
 
-const REST_API_BASE_URL = "http://localhost:8080/api/departments";
+const REST_API_BASE_URL =
+  "https://disturbed-marilin-jatin123-58a12b05.koyeb.app/api/departments";
 
 export const listDepartments = () => {
   return axios.get(REST_API_BASE_URL);

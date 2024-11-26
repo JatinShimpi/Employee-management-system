@@ -1,7 +1,8 @@
 import axios from "axios";
 import { EmployeeType } from "../Employeeslist";
 
-const REST_API_BASE_URL = "http://localhost:8080/api/employees";
+const REST_API_BASE_URL =
+  "https://disturbed-marilin-jatin123-58a12b05.koyeb.app/api/employees";
 
 export const listEmployees = () => {
   return axios.get(REST_API_BASE_URL);
