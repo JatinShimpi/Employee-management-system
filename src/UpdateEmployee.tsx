@@ -11,7 +11,13 @@ const UpdateEmployee = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
-  const [departments, setDepartments] = useState([]);
+  const [departments, setDepartments] = useState([
+    {
+      departmentName: " ",
+      departmentDescription: " ",
+      id:1
+    },
+  ]);
 
   useEffect(() => {
     listDepartments()

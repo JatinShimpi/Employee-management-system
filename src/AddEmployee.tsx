@@ -7,7 +7,13 @@ import { listDepartments } from "./services/DepartmentService";
 
 const AddEmployee = () => {
   const navigate = useNavigate();
-  const [departments, setDepartments] = useState([]); 
+  const [departments, setDepartments] = useState([
+    {
+      departmentName: "",
+      departmentDescription: "",
+      id:1
+    },
+  ]); 
 
   useEffect(() => {
     listDepartments()

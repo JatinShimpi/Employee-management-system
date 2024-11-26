@@ -22,11 +22,25 @@ interface DataType {
   id: number;
   email: string;
   department: number;
+  departmentName:string;
 }
 
 const Employeeslist = () => {
-  const [employees, setEmployees] = useState([]);
-  const [departments, setDepartments] = useState([]);
+  const [employees, setEmployees] = useState([
+    {
+      firstName: "",
+      lastName: "",
+      email: "",
+      departmentId: 1,
+    },
+  ]);
+  const [departments, setDepartments] = useState([
+    {
+      departmentName: "",
+      departmentDescription: "",
+      id:1
+    },
+  ]);
 
   const navigate = useNavigate();
 
@@ -76,17 +90,24 @@ const Employeeslist = () => {
       });
   }
 
- const departmentMap = departments.reduce(
-   (map, dept) => ({ ...map, [dept.id]: dept.departmentName }),
-   {}
- );
+ 
 
- const transformedEmployees = employees.map((employee) => ({
-   ...employee,
-   department: departmentMap[employee.departmentId] || "Unknown", // Replace departmentId with name
-   departmentId: undefined, // Optionally, remove the departmentId field
- }));
+  const transformedEmployees = employees.map((employee) => {
+    // Find the corresponding department
+    const department = departments.find(
+      (dept) => dept.id === employee.departmentId
+    );
 
+    return {
+      key: employee.departmentId, // assuming departmentId can be used as key
+      firstName: employee.firstName || "",
+      lastName: employee.lastName || "",
+      id: employee.departmentId, // you might want to use a different unique identifier
+      email: employee.email || "",
+      department: employee.departmentId,
+      departmentName: department ? department.departmentName : "Unassigned",
+    };
+  });
 
   return (
     <div className="h-[calc(100vh-170px)]">
@@ -108,7 +129,7 @@ const Employeeslist = () => {
 
         <Column title="ID" dataIndex="id" key="age" />
         <Column title="Email" dataIndex="email" key="address" />
-        <Column title="Department" dataIndex={"department"} key="department" />
+        <Column title="Department" dataIndex={"departmentName"} key="departmentName" />
 
         <Column
           title="Actions"

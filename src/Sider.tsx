@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   ContainerOutlined,
   DesktopOutlined,
@@ -8,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Button, Menu } from "antd";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -23,7 +23,7 @@ const Sider = () => {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const navigator:MenuProps["onClick"] = (e) => {
+  const navigator: MenuProps["onClick"] = (e) => {
     navigate(e.key);
   };
 
