@@ -19,7 +19,7 @@ const Navbar = () => {
         ></img>
       </div>
 
-      <ul className="flex space-x-10 mr-96">
+      <ul className="flex space-x-10 mr-4">
         {["Home", "About", "Services", "Contact"].map((item, index) => (
           <li
             key={index}
