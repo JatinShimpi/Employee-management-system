@@ -8,6 +8,7 @@ import {
 import type { MenuProps } from "antd";
 import { Button, Menu } from "antd";
 import { useState } from "react";
+import { MdPersonAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -16,9 +17,22 @@ const Sider = () => {
   const navigate = useNavigate();
 
   const items: MenuItem[] = [
-    { key: "/Homepage", icon: <PieChartOutlined />, label: "Homepage" },
-    { key: "/employees", icon: <DesktopOutlined />, label: "Employees" },
-    { key: "/departments", icon: <ContainerOutlined />, label: "Departments" },
+    { key: "/dashboard", icon: <PieChartOutlined />, label: "Homepage" },
+    {
+      key: "/dashboard/employees",
+      icon: <DesktopOutlined />,
+      label: "Employees",
+    },
+    {
+      key: "/dashboard/departments",
+      icon: <ContainerOutlined />,
+      label: "Departments",
+    },
+    {
+      key:"signup",
+      icon: <MdPersonAdd/>,
+      label:"Signup",
+    }
   ];
 
   const [collapsed, setCollapsed] = useState(false);

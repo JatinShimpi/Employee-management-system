@@ -1,25 +1,41 @@
 import axios from "axios";
 import { EmployeeType } from "../Employeeslist";
 
-const REST_API_BASE_URL =
-  "https://disturbed-marilin-jatin123-58a12b05.koyeb.app/api/employees";
+const apiUrl = import.meta.env.VITE_REST_API_BASE_URL;
+
+const apiClient = axios.create({
+  baseURL: apiUrl,
+});
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("authToken"); // Or fetch from context
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export const listEmployees = () => {
-  return axios.get(REST_API_BASE_URL);
+  return apiClient.get("employees");
 };
 
 export const createEmployee = (employee: EmployeeType) => {
-  return axios.post(REST_API_BASE_URL, employee);
+  return apiClient.post("employees", employee);
 };
 
 export const getEmployee = (employeeId: number) => {
-  return axios.get(REST_API_BASE_URL + "/" + employeeId);
+  return apiClient.get(`employees/${employeeId}`);
 };
 
 export const updateEmployee = (employeeId: number, employee: EmployeeType) => {
-  return axios.put(REST_API_BASE_URL + "/" + employeeId, employee);
+  return apiClient.put(`employees/${employeeId}`, employee);
 };
 
 export const deleteEmployee = (employeeId: number) => {
-  return axios.delete(REST_API_BASE_URL + "/" + employeeId);
+  return apiClient.delete(`employees/${employeeId}`);
 };
