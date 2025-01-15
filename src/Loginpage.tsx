@@ -35,7 +35,7 @@ const Loginpage = () => {
   return (
     <div className="w-full h-screen bg-gray-100 flex flex-row">
       <div className="w-1/2 h-screen flex items-center justify-center">
-        <img src="public\Group30.png" className=" mx-auto" />
+        <img src="/Group30.png" className=" mx-auto" />
       </div>
       <div className="w-1/2 h-screen flex items-center justify-center">
         <div className="w-[500px] h-[420px] mx-auto my-auto bg-white py-7 rounded-md shadow-lg">
