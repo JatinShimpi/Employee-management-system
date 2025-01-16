@@ -10,7 +10,7 @@ The **Employee Management System** is a web-based application designed to effici
 - **Department Management**: Manage different departments and assign employees to departments.
 - **Responsive Frontend**: Built with React for an interactive and intuitive user experience.
 - **Robust Backend**: Designed using Spring Boot, ensuring scalability and reliability.
-- **Database Integration**: Hosted on [FreeSQLDatabase](https://www.freesqldatabase.com/).
+- **Database Integration**: Hosted on MongoDB
 - **Backend Deployment**: Hosted on Koyeb for global accessibility.
 
 ---
