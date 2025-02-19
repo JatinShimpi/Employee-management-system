@@ -23,7 +23,7 @@ The **Employee Management System** is a web-based application designed to effici
 - **Styling**: CSS/Tailwind CSS (as per your implementation)
 
 ### Backend
-- **Framework**: Spring Boot
-- **Database**: MySQL (hosted on [FreeSQLDatabase](https://www.freesqldatabase.com/))
+- **Framework**: Spring Boot, Docker
+- **Database**: MongoDB
 - **Deployment**: Koyeb
 
